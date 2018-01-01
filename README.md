@@ -31,3 +31,4 @@ The dataset used is a simulated bank data (Churn_Modelling.csv) which has 10,000
 | IsActiveMember |	Is the customer an active member? |
 | EstimatedSalary	| Customer's estimated salary |
 | Exited |	Did the customer leave the bank? |
+
