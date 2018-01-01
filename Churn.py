@@ -78,7 +78,7 @@ classifier.fit(x_train, y_train, batch_size=10, nb_epoch = 100)
 ## Making Predictions and Evaluating the Model
 # Predicting the test set results:
 y_pred = classifier.predict(x_test)
-y_pred = (y_pred > 0.5)
+y_pred = (y_pred > 0.5) # Cutoff is set at 0.5
 
 # Building the Confusion Matrix
 from sklearn.metrics import confusion_matrix
