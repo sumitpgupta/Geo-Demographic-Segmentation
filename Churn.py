@@ -46,6 +46,8 @@ classifier = Sequential()
 
 # Adding the input layer and first hidden layer
 classifier.add(Dense(output_dim = 6, init = 'uniform',activation='relu', input_dim = 11))
+# Dense function to add a fully connected layer
+
 # With dropout
 # classifier.add(Dropout(p=0.1))
 
@@ -106,7 +108,7 @@ from sklearn.model_selection import cross_val_score
 from keras.models import Sequential
 from keras.layers import Dense
 
-"""def build_classifier():
+def build_classifier():
     classifier = Sequential()
     classifier.add(Dense(output_dim = 6, init = 'uniform',activation='relu', input_dim = 11))
     classifier.add(Dense(output_dim = 6, init = 'uniform',activation='relu'))
@@ -119,8 +121,8 @@ classifier = KerasClassifier(build_fn= build_classifier, batch_size = 10, nb_epo
 # Computing accuracies of 10 folds
 accuracies = cross_val_score(estimator=classifier, X = x_train, y= y_train, cv=3, n_jobs= -1) 
 
-# mean = accuracies.mean() # Computing means of accuracies of 10 folds
-# variance = accuracies.std() """
+mean = accuracies.mean() # Computing means of accuracies of 10 folds
+variance = accuracies.std()
 
 # Dropout regulrization to reduce overfitting if required
 
