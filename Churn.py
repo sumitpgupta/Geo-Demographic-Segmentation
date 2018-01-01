@@ -11,14 +11,19 @@ y = dataset.iloc[:,13].values
 
 # Encoding categorical Data
 from sklearn.preprocessing import LabelEncoder, OneHotEncoder
+
+# Encoding geography
 labelencoder_x_1 = LabelEncoder()
 x[:,1]= labelencoder_x_1.fit_transform(x[:, 1])
 
+# Encoding gender
 labelencoder_x_2 = LabelEncoder()
 x[:,2] = labelencoder_x_2.fit_transform(x[:,2])
 
 onehotencoder = OneHotEncoder(categorical_features=[1])
 x = onehotencoder.fit_transform(x).toarray()
+
+# avoid dummy variable trap
 x = x[:,1:]
 
 
@@ -37,18 +42,21 @@ x_test  = sc.fit_transform(x_test)
 
 # Importing the Keras package
 import keras
-from keras.models import Sequential
-from keras.layers import Dense
-from keras.layers import Dropout
+from keras.models import Sequential # to initiate neural network
+from keras.layers import Dense  # to create layers
+from keras.layers import Dropout  # for dropout regularization
 
 # Initializing the ANN
 classifier = Sequential()
 
+# Adding layers
+# output_dim = average(input and output nodes) = (11+1)/2 = 6
+
 # Adding the input layer and first hidden layer
 classifier.add(Dense(output_dim = 6, init = 'uniform',activation='relu', input_dim = 11))
-# Dense function to add a fully connected layer
+# Dense function is to add a fully connected layer
 
-# With dropout
+# With dropout (Dropout regulrization is to reduce overfitting if required)
 # classifier.add(Dropout(p=0.1))
 
  
@@ -66,8 +74,8 @@ classifier.compile(optimizer='adam', loss='binary_crossentropy', metrics=['accur
 # Fitting ANN to train set
 classifier.fit(x_train, y_train, batch_size=10, nb_epoch = 100)
 
-## Making Predictions and Evaluating the Model
 
+## Making Predictions and Evaluating the Model
 # Predicting the test set results:
 y_pred = classifier.predict(x_test)
 y_pred = (y_pred > 0.5)
@@ -78,12 +86,13 @@ cm = confusion_matrix(y_test, y_pred)
 cm
 
 # Checking the Accuracy
-"""Accuracy = (1538+142)/(1538+57+263+142)
-Accuracy"""
-    
+accuracy = (cm[0, 0] + cm[1, 1])/(cm[0, 0] + cm[1, 1] + cm[0, 1] + cm[1, 0])
+accuracy
+
+
 ##### New test case #####
 
-""" Predict if the following customre will churn/leave the bank:
+""" Predict if the following customer will churn/leave the bank:
 Geography : France
 Credit Score : 600
 Gender: Male
@@ -124,10 +133,8 @@ accuracies = cross_val_score(estimator=classifier, X = x_train, y= y_train, cv=3
 mean = accuracies.mean() # Computing means of accuracies of 10 folds
 variance = accuracies.std()
 
-# Dropout regulrization to reduce overfitting if required
 
-
-# Tuning the ANN
+# Tuning the ANN (Hyper parameter Tuning)
 from keras.wrappers.scikit_learn import KerasClassifier 
 from sklearn.model_selection import GridSearchCV
 from keras.models import Sequential
@@ -140,19 +147,27 @@ def build_classifier(optimizer):
     classifier.add(Dense(output_dim = 1, init = 'uniform',activation='sigmoid'))
     classifier.compile(optimizer= optimizer, loss='binary_crossentropy', metrics=['accuracy'])
     return classifier
+
 classifier = KerasClassifier(build_fn=build_classifier)
 parameters = {'batch_size': [25,32],
               'nb_epoch': [100,500],
               'optimizer':['adam','rmsprop']}
+# grid search on parameters
 grid_search = GridSearchCV(estimator=classifier, 
                            param_grid=parameters,
                            scoring='accuracy',
                            cv=10)
 grid_search = grid_search.fit(x_train, y_train)
-best_parameters = grid_search.best_params_
-best_accuracy = grid_search.best_score_
 
-""" Best parameters are:
+
+best_parameters = grid_search.best_params_ # best parameters
+best_accuracy = grid_search.best_score_ # best accuracy
+
+# print values
+print("Best parameters: {best_params}".format(best_params=best_parameters))
+print("Best accuracy: {best_acc}".format(best_acc=best_accuracy))
+
+""" Best parameters on running the model were:
     Batch_size: 25
     nb_epoch : 100
     optimizer: 'adam' 
