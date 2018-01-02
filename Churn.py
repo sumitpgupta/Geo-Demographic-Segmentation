@@ -172,7 +172,7 @@ print("Best accuracy: {best_acc}".format(best_acc=best_accuracy))
     nb_epoch : 100
     optimizer: 'adam' 
     
-    Best Accuracy = 82.88% """
+    Best Accuracy = 83.75% """
     
     
 
