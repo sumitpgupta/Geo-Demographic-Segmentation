@@ -32,3 +32,26 @@ The dataset used is a simulated bank data (Churn_Modelling.csv) which has 10,000
 | EstimatedSalary	| Customer's estimated salary |
 | Exited |	Did the customer leave the bank? |
 
+# Usage
+Run `Churn.py` in terminal to see the network in training. I have used Spyder from Anaconda to script and visualize the code.
+
+# Test Run
+
+```
+Epoch 94/100
+8000/8000 [==============================] - 0s - loss: 0.3996 - acc: 0.8356      
+Epoch 95/100
+8000/8000 [==============================] - 0s - loss: 0.3997 - acc: 0.8352     
+Epoch 96/100
+8000/8000 [==============================] - 0s - loss: 0.4000 - acc: 0.8360     
+Epoch 97/100
+8000/8000 [==============================] - 0s - loss: 0.3998 - acc: 0.8365      
+Epoch 98/100
+8000/8000 [==============================] - 0s - loss: 0.3997 - acc: 0.8350      
+Epoch 99/100
+8000/8000 [==============================] - 0s - loss: 0.4000 - acc: 0.8346     
+Epoch 100/100
+8000/8000 [==============================] - 0s - loss: 0.3998 - acc: 0.8375     
+```
+## Accuracy : 83.75%
+
